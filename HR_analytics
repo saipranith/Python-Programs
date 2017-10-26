@@ -1,0 +1,100 @@
+class Employee(object):
+
+	def __init__(self, name, age, salary, salary_competition, experience_in_years, health_insur_claims, health_insur_claims_accepted, how_they_are_treated_in_office, role_of_company_in_developing_his_skills):
+		self.name = name
+		self.age = age
+		self.salary = salary
+		self.salary_competition = salary_competition
+		self.experience_in_years = experience_in_years
+		self.health_insur_claims = health_insur_claims
+		self.health_insur_claims_accepted = health_insur_claims_accepted
+		self.how_they_are_treated_in_office = how_they_are_treated_in_office # give a rating on scale 1-5, 5 being the best treatment
+		self.role_of_company_in_developing_his_skills = role_of_company_in_developing_his_skills # on a scale of 1-5, 5 being most helpful
+	
+
+	def chance_they_will_quit(self)	:
+
+		chance = 0
+
+#Chance to quit because of age
+		if self.age > 55:
+			chance += 20
+		
+		elif 50 < self.age <= 55 :
+			chance += 15
+		
+		elif 45 < self.age <= 50 :
+			chance += 5
+
+		else :
+			chance += 0
+
+#Chance to quit because of salary
+		
+		salary_change_percent = float((self.salary_competition - self.salary)/ self.salary)
+
+		if 0.02 < salary_change_percent < 0.1:
+			chance += 8
+
+		elif 0.1 <= salary_change_percent < 0.2:
+			chance += 20
+
+		elif 0.2 <= salary_change_percent < 0.25:
+			chance += 30	
+
+		elif salary_change_percent >= 0.25:
+			chance = 100
+			return chance  #If salary offered by other companies is more than 25%, he will definitely quit
+
+#Chance to quit due to bad health insurance policy offered by company
+		
+		if 2 <= self.health_insur_claims <= 4 and self.health_insur_claims_accepted <= 1:
+			chance += 10
+
+		elif 4 < self.health_insur_claims <= 7  and self.health_insur_claims_accepted <= 2 :
+			chance += 10
+
+		elif 4 < self.health_insur_claims <=7  and self.health_insur_claims_accepted < 2 :
+			chance += 20	
+
+		elif self.health_insur_claims > 7 and self.health_insur_claims_accepted < 3:
+			chance += 25
+#Chance to quit due to treatment at office by their peers
+ 			
+ 		if 2 <= self.how_they_are_treated_in_office <= 4 and salary_change_percent < 0:
+ 			chance += 5
+
+ 		elif 2 <= self.how_they_are_treated_in_office <=4 and salary_change_percent > 0:
+ 			chance += 10
+
+ 		elif 0 < self.how_they_are_treated_in_office < 2 and salary_change_percent 	< 0:
+ 			chance += 10
+
+ 		elif 0 < self.how_they_are_treated_in_office < 2 and salary_change_percent > 0:
+ 			chance = 100
+ 			return chance	
+
+ 		if 2 <= self.role_of_company_in_developing_his_skills <= 4 and salary_change_percent < 0:
+ 			chance += 2.5
+
+ 		elif 2 <= self.role_of_company_in_developing_his_skills <=4 and salary_change_percent > 0:
+ 			chance += 12.5
+
+ 		elif 0 < self.role_of_company_in_developing_his_skills < 2 and salary_change_percent 	< 0:
+ 			chance += 10
+
+ 		elif 0 < self.role_of_company_in_developing_his_skills < 2 and salary_change_percent > 0:
+ 			chance = 100
+ 			return chance	
+ 		
+
+ 		return chance	
+ 			
+
+test = Employee('Mr. X', 65, 1500000, 1765000, 8, 5, 4, 3.5, 3.5)
+print test.chance_they_will_quit()			
+
+ 					
+
+
+
